@@ -20,16 +20,16 @@
 //   BOTH the lecturer/course combination and the course as a whole.
 
 // === Domain model - fill in the blanks ===
-// There are 4 models: _____, _____, _____, _____
-// There is one many-to-many relationship: _____ <-> _____, which translates to two one-to-many relationships:
-// - One-to-many: _____ -> _____
+// There are 4 models: Courses, Professors, Reviews, Sections
+// There is one many-to-many relationship: Courses <-> Professors, which translates to two one-to-many relationships:
+// - One-to-many: Course -> Sections
 // - One-to-many: _____ -> _____
 // And one more one-to-many: _____ -> _____
 // Therefore:
-// - The first model, _____, contains the following fields (not including ID): _____, _____ 
-// - The second model, _____, contains the following fields: _____
-// - The third model, _____, contains the following fields: _____, _____
-// - The fourth model, _____, contains the following fields, _____, _____, _____
+// - The first model, Courses, contains the following fields (not including ID): Course Number, Course Name 
+// - The second model, Professors , contains the following fields: Name
+// - The third model, Sections, contains the following fields: courseID, ProfessorID
+// - The fourth model, Reviews, contains the following fields: SectionID, Rating, Body
 
 // allows us to use firebase
 let firebase = require(`./firebase`)
@@ -38,13 +38,13 @@ let firebase = require(`./firebase`)
 exports.handler = async function(event) {
 
   // get the course number being requested
-
+  let courseNumber = event.queryStringParameters.courseNumber
   // establish a connection to firebase in memory
-
+  let db = firebase.firestore()
   // ask Firebase for the course that corresponds to the course number, wait for the response
-
+  let courseQuery = await db.collection(`courses`).where(`number`, `==`, course).get() 
   // get the first document from the query
-
+  let course = courseQuery.docs[0]
   // get the id from the document
 
   // get the data from the document
